@@ -6,7 +6,7 @@ export const appInputVariants = tv({
     wrapper: "flex-row items-center border-b border-gray-400 pb-5",
     input: "bg-transparent text-gray-500 text-lg flex-1",
     label: "text-sm text-gray-400 mb-1 font-semibold",
-    error: "text-sm text-danger mt-1",
+    error: "text-sm text-danger-base mt-1",
   },
   variants: {
     isFocused: {
@@ -17,14 +17,14 @@ export const appInputVariants = tv({
     },
     isError: {
       true: {
-        wrapper: "border-danger",
-        label: "text-danger",
+        wrapper: "border-danger-base",
+        label: "text-danger-base",
       },
     },
     isDisabled: {
       true: {
         wrapper: "opacity-50",
-        input: "text-gray-300",
+        input: "text-gray-400",
       },
     },
   },

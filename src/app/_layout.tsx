@@ -8,6 +8,7 @@ import {
 import { useEffect } from "react"
 import { StatusBar } from "expo-status-bar"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
@@ -17,6 +18,7 @@ SplashScreen.preventAutoHideAsync()
 
 function AppContent() {
   const insets = useSafeAreaInsets()
+  const queryClient = new QueryClient()
 
   return (
     <GestureHandlerRootView
@@ -27,15 +29,17 @@ function AppContent() {
         paddingRight: insets.right,
       }}
     >
-      <StatusBar style="dark" />
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="(public)" />
-        <Stack.Screen name="(private)" />
-      </Stack>
+      <QueryClientProvider client={queryClient}>
+        <StatusBar style="dark" />
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="(public)" />
+          <Stack.Screen name="(private)" />
+        </Stack>
+      </QueryClientProvider>
     </GestureHandlerRootView>
   )
 }
