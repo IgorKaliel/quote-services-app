@@ -5,10 +5,14 @@ import { KeyboardContainer } from "@/shared/components/organisms/KeyboardContain
 import { AuthFormHeader } from "@/shared/components/molecules/AppFormHeader"
 import { AppInput } from "@/shared/components/organisms/AppInput"
 import { router } from "expo-router"
+import { AppButton } from "@/shared/components/atoms/AppButton"
+import { AppInputController } from "@/shared/components/molecules/AppInputController"
 
-export const RegisterView: FC<
-  ReturnType<typeof useRegisterViewModel>
-> = ({}) => {
+export const RegisterView: FC<ReturnType<typeof useRegisterViewModel>> = ({
+  control,
+  errors,
+  onSubmit,
+}) => {
   return (
     <KeyboardContainer>
       <ScrollView
@@ -27,29 +31,53 @@ export const RegisterView: FC<
           />
 
           <View className="w-full mb-6">
-            <Text className="text-sm font-bold text-gray-500 mb-4">
-              DADOS PESSOAIS
-            </Text>
+            <AppInputController
+              leftIcon="person-outline"
+              label="NOME"
+              control={control}
+              name="name"
+              placeholder="Digite seu nome:"
+            />
 
-            <AppInput label="NOME" leftIcon="person-outline" />
-            <AppInput label="E-MAIL" leftIcon="mail-outline" />
-            <AppInput label="TELEFONE" leftIcon="call-outline" />
+            <AppInputController
+              leftIcon="phone-portrait-outline"
+              label="CELULAR"
+              control={control}
+              name="phone"
+              placeholder="(00) 99999-9999"
+            />
           </View>
           <View className="w-full">
-            <Text className="text-sm font-bold text-gray-500 mb-4">
-              DADOS DE ACESSO
-            </Text>
-            <AppInput
-              label="SENHA"
-              leftIcon="lock-closed-outline"
-              secureTextEntry
+            <Text className="text-sm font-bold text-gray-500 mb-4">ACESSO</Text>
+            <AppInputController
+              leftIcon="mail-outline"
+              label="E-MAIL"
+              control={control}
+              name="email"
+              placeholder="email@exemplo.com"
             />
-            <AppInput
-              label="CONFIRMAR SENHA"
+
+            <AppInputController
               leftIcon="lock-closed-outline"
+              label="SENHA"
+              control={control}
+              name="password"
               secureTextEntry
+              placeholder="Digite a sua senha:"
+            />
+
+            <AppInputController
+              leftIcon="lock-closed-outline"
+              label="CONFIRMAR SENHA"
+              control={control}
+              name="confirmPassword"
+              secureTextEntry
+              placeholder="Confirme a sua senha:"
             />
           </View>
+          <AppButton className="mt-4" onPress={onSubmit}>
+            Registrar
+          </AppButton>
           <TouchableOpacity
             className="mt-8"
             activeOpacity={0.7}
