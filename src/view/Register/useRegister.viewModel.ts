@@ -6,7 +6,8 @@ import { useUserStore } from "@/shared/store/user-store"
 
 export const useRegisterViewModel = () => {
   const userRegisterMutation = useRegisterMutation()
-  const { user, setSession } = useUserStore()
+  const { setSession } = useUserStore()
+
   const {
     control,
     handleSubmit,
@@ -32,8 +33,6 @@ export const useRegisterViewModel = () => {
       user: mutationResponse.user,
     })
   })
-
-  console.log(`SetSession: ${JSON.stringify(user)}`)
 
   return { control, errors, onSubmit }
 }
