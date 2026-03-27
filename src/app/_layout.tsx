@@ -7,6 +7,7 @@ import {
 } from "@expo-google-fonts/lato"
 import { useEffect } from "react"
 import { StatusBar } from "expo-status-bar"
+import ToastManager from "toastify-react-native"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import {
@@ -39,6 +40,7 @@ function AppContent() {
           <Stack.Screen name="(public)" />
           <Stack.Screen name="(private)" />
         </Stack>
+        <ToastManager useModal={false} />
       </QueryClientProvider>
     </GestureHandlerRootView>
   )
