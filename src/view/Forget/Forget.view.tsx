@@ -7,7 +7,7 @@ import { AppInput } from "@/shared/components/organisms/AppInput"
 import { AppButton } from "@/shared/components/atoms/AppButton"
 
 export const ForgetView: FC = () => {
-  const isSuccess = true
+  const isSuccess = false
 
   return (
     <KeyboardContainer>
