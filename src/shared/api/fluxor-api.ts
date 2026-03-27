@@ -3,7 +3,7 @@ import axios, { AxiosInstance, AxiosRequestConfig } from "axios"
 import { Platform } from "react-native"
 
 const getBaseURL = () => {
-  return "http://192.168.15.4:4001"
+  return "http://192.168.15.6:4001"
   /*return Platform.select({
     ios: "http://localhost:3001",
     android: "http://10.0.2.2:3001",
