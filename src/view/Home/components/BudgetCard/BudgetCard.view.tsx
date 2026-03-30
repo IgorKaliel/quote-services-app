@@ -37,6 +37,12 @@ export const BudgetCardView: FC<ReturnType<typeof useBudgetCardViewModel>> = ({
               </View>
             </View>
 
+            {budget.description ? (
+              <Text className="text-sm text-gray-500 mt-2" numberOfLines={2}>
+                {budget.description}
+              </Text>
+            ) : null}
+
             <Text className="text-sm font-semibold text-gray-700 mt-3">
               {budget.clientName}
             </Text>
@@ -44,12 +50,6 @@ export const BudgetCardView: FC<ReturnType<typeof useBudgetCardViewModel>> = ({
             {budget.categoryName ? (
               <Text className="text-sm text-gray-500 mt-1">
                 {budget.categoryName}
-              </Text>
-            ) : null}
-
-            {budget.description ? (
-              <Text className="text-sm text-gray-500 mt-3" numberOfLines={2}>
-                {budget.description}
               </Text>
             ) : null}
 
