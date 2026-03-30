@@ -2,8 +2,15 @@ import { BudgetSummaryInterface } from "@/shared/interface/budgets"
 import { useBudgetInfiniteQuery } from "@/shared/queries/budget/use-budget-infinite-query"
 
 export const useHomeViewModel = () => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useBudgetInfiniteQuery({})
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isRefetching,
+    refetch,
+  } = useBudgetInfiniteQuery({})
 
   const budgets: BudgetSummaryInterface[] =
     data?.pages.flatMap((page) => page.data) ?? []
@@ -15,11 +22,18 @@ export const useHomeViewModel = () => {
 
     fetchNextPage()
   }
-  console.log("pages", data?.pages)
+
+  const handleRefresh = async () => {
+    await refetch()
+  }
+
   return {
     budgets,
     handleLoadMore,
     isFetchingNextPage,
     isLoading,
+    hasNextPage,
+    isRefetching,
+    handleRefresh,
   }
 }
