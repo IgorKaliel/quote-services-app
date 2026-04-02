@@ -4,7 +4,7 @@ import { Platform } from "react-native"
 import { useUserStore } from "../store/user-store"
 
 const getBaseURL = () => {
-  return "http://192.168.15.6:4001"
+  return "http://192.168.15.8:4001"
   /*return Platform.select({
     ios: "http://localhost:3001",
     android: "http://10.0.2.2:3001",
@@ -112,7 +112,8 @@ export class FluxorApiClient {
               currentRefreshToken = parsed.state?.refreshToken
             }
 
-            if (!currentRefreshToken) throw new Error("Refresh token não encontrado")
+            if (!currentRefreshToken)
+              throw new Error("Refresh token não encontrado")
 
             const { data } = await this.instance.post("/auth/refresh", {
               refreshToken: currentRefreshToken,

@@ -6,4 +6,5 @@ export interface UserInterface {
   avatarUrl?: string
   createdAt: string
   updatedAt: string
+  deletedAt: string | null
 }
