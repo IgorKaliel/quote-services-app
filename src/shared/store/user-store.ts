@@ -38,7 +38,11 @@ export const useUserStore = create<UserStore>()(
           refreshToken: null,
         }),
       setSession: (sessionData) => set({ ...sessionData }),
-      updateTokens: (updateTokensData) => set({ ...updateTokensData }),
+      updateTokens: (updateTokensData) =>
+        set((state) => ({
+          ...state,
+          ...updateTokensData,
+        })),
     }),
     { name: "fluxor-auth", storage: createJSONStorage(() => AsyncStorage) },
   ),

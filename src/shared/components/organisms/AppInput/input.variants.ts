@@ -9,9 +9,18 @@ export const appInputVariants = tv({
     error: "text-sm text-danger-base mt-1",
   },
   variants: {
+    variant: {
+      default: {},
+      search: {
+        wrapper:
+          "rounded-full border border-gray-300 bg-white px-4 py-2.5 min-h-[44px]",
+        input: "text-sm text-gray-700",
+        label: "hidden",
+      },
+    },
     isFocused: {
       true: {
-        wrapper: "border-purple-base",
+        wrapper: "border-purple-base border",
         label: "text-purple-base",
       },
     },
@@ -29,6 +38,7 @@ export const appInputVariants = tv({
     },
   },
   defaultVariants: {
+    variant: "default",
     isDisabled: false,
     isError: false,
     isFocused: false,
