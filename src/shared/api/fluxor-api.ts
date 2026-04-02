@@ -1,9 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios"
 import { Platform } from "react-native"
+import { useUserStore } from "../store/user-store"
 
 const getBaseURL = () => {
-  return "http://192.168.15.4:4001"
+  return "http://192.168.15.6:4001"
   /*return Platform.select({
     ios: "http://localhost:3001",
     android: "http://10.0.2.2:3001",
@@ -49,16 +50,23 @@ export class FluxorApiClient {
   private setupInterceptors() {
     this.instance.interceptors.request.use(
       async (config) => {
+        const { token } = useUserStore.getState()
+
+        if (token) {
+          config.headers = config.headers || {}
+          config.headers.Authorization = `Bearer ${token}`
+          return config
+        }
+
         const userData = await AsyncStorage.getItem("fluxor-auth")
 
         if (userData) {
-          const {
-            state: { token },
-          } = JSON.parse(userData)
+          const parsed = JSON.parse(userData)
+          const persistedToken = parsed.state?.token
 
-          if (token) {
+          if (persistedToken) {
             config.headers = config.headers || {}
-            config.headers.Authorization = `Bearer ${token}`
+            config.headers.Authorization = `Bearer ${persistedToken}`
           }
         }
 
@@ -91,23 +99,28 @@ export class FluxorApiClient {
           this.isRefreshing = true
 
           try {
-            const userData = await AsyncStorage.getItem("fluxor-auth")
+            const { refreshToken, updateTokens } = useUserStore.getState()
 
-            if (!userData) throw new Error("Usuário não autenticado")
+            let currentRefreshToken = refreshToken
 
-            const parsed = JSON.parse(userData)
+            if (!currentRefreshToken) {
+              const userData = await AsyncStorage.getItem("fluxor-auth")
 
-            const refreshToken = parsed.state?.refreshToken
-            if (!refreshToken) throw new Error("Refresh token não encontrado")
+              if (!userData) throw new Error("Usuário não autenticado")
+
+              const parsed = JSON.parse(userData)
+              currentRefreshToken = parsed.state?.refreshToken
+            }
+
+            if (!currentRefreshToken) throw new Error("Refresh token não encontrado")
 
             const { data } = await this.instance.post("/auth/refresh", {
-              refreshToken,
+              refreshToken: currentRefreshToken,
             })
-
-            parsed.state.token = data.token
-            parsed.state.refreshToken = data.refreshToken
-
-            await AsyncStorage.setItem("fluxor-auth", JSON.stringify(parsed))
+            updateTokens({
+              token: data.token,
+              refreshToken: data.refreshToken,
+            })
 
             this.processQueue(null, data.token)
 

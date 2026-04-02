@@ -79,7 +79,7 @@ export const RegisterView: FC<ReturnType<typeof useRegisterViewModel>> = ({
             Registrar
           </AppButton>
           <TouchableOpacity
-            className="mt-8"
+            className="mt-8 px-1 py-1"
             activeOpacity={0.7}
             onPress={() => router.push("/(public)/login")}
           >

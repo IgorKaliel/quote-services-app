@@ -34,6 +34,7 @@ export const AppInput: FC<AppInputProps> = ({
   onChangeText,
   error,
   isDisabled,
+  variant,
   ...textInputProps
 }) => {
   const {
@@ -57,10 +58,14 @@ export const AppInput: FC<AppInputProps> = ({
   })
 
   const styles = appInputVariants({
+    variant,
     isFocused,
     isDisabled,
     isError: !!error,
   })
+
+  const iconSize = variant === "search" ? 18 : 22
+  const iconSpacing = variant === "search" ? "mr-2" : "mr-3"
 
   return (
     <View className={styles.container({ className: containerClassName })}>
@@ -69,8 +74,8 @@ export const AppInput: FC<AppInputProps> = ({
         {leftIcon && (
           <Ionicons
             color={getIconColor()}
-            className="mr-3"
-            size={22}
+            className={iconSpacing}
+            size={iconSize}
             name={leftIcon}
           />
         )}
@@ -86,7 +91,7 @@ export const AppInput: FC<AppInputProps> = ({
         {secureTextEntry && (
           <TouchableOpacity activeOpacity={0.7} onPress={handlePasswordToggle}>
             <Ionicons
-              size={22}
+              size={iconSize}
               name={showPassword ? "eye-outline" : "eye-off-outline"}
             />
           </TouchableOpacity>
