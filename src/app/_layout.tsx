@@ -5,7 +5,7 @@ import {
   Lato_400Regular,
   Lato_700Bold,
 } from "@expo-google-fonts/lato"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { StatusBar } from "expo-status-bar"
 import ToastManager from "toastify-react-native"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
@@ -19,7 +19,7 @@ SplashScreen.preventAutoHideAsync()
 
 function AppContent() {
   const insets = useSafeAreaInsets()
-  const queryClient = new QueryClient()
+  const [queryClient] = useState(() => new QueryClient())
 
   return (
     <GestureHandlerRootView
