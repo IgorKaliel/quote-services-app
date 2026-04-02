@@ -1,7 +1,15 @@
+import { useDebounce } from "@/shared/hooks/useDebounce"
 import { BudgetSummaryInterface } from "@/shared/interface/budgets"
 import { useBudgetInfiniteQuery } from "@/shared/queries/budget/use-budget-infinite-query"
+import { useState } from "react"
 
 export const useHomeViewModel = () => {
+  //const { appliedFilterState } = useFilterStore()
+
+  const [searchText, setSearchText] = useState("")
+
+  const currentSearchText = useDebounce(searchText)
+
   const {
     data,
     fetchNextPage,
@@ -10,10 +18,16 @@ export const useHomeViewModel = () => {
     isLoading,
     isRefetching,
     refetch,
-  } = useBudgetInfiniteQuery({})
+  } = useBudgetInfiniteQuery({
+    //filters: { ...appliedFilterState, searchText: currentSearchText },
+  })
 
   const budgets: BudgetSummaryInterface[] =
     data?.pages.flatMap((page) => page.data) ?? []
+
+  const draftBudgetsCount = budgets.filter(
+    (budget) => budget.status === "draft",
+  ).length
 
   const handleLoadMore = () => {
     if (!hasNextPage || isFetchingNextPage) {
@@ -35,5 +49,8 @@ export const useHomeViewModel = () => {
     hasNextPage,
     isRefetching,
     handleRefresh,
+    searchText,
+    setSearchText,
+    draftBudgetsCount,
   }
 }

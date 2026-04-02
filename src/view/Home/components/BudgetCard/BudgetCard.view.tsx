@@ -1,11 +1,12 @@
+import { AppPriceText } from "@/shared/components/molecules/AppPriceText"
 import { FC } from "react"
 import { useBudgetCardViewModel } from "./useBudgetCard.viewModel"
 import { Text, View } from "react-native"
+import { Ionicons } from "@expo/vector-icons"
 
 export const BudgetCardView: FC<ReturnType<typeof useBudgetCardViewModel>> = ({
   budget,
   displayBudgetName,
-  formattedTotal,
   formattedUpdatedAt,
   statusStyle,
 }) => {
@@ -18,11 +19,12 @@ export const BudgetCardView: FC<ReturnType<typeof useBudgetCardViewModel>> = ({
           </Text>
 
           <View
-            className="rounded-full px-3 py-1"
+            className="flex-row items-center rounded-lg px-3 py-2"
             style={{ backgroundColor: statusStyle.backgroundColor }}
           >
+            <Ionicons name="ellipse" size={10} color={statusStyle.color} />
             <Text
-              className="text-[11px] font-bold"
+              className="ml-1 text-left text-[11px] font-bold"
               style={{ color: statusStyle.color }}
             >
               {statusStyle.label}
@@ -50,9 +52,11 @@ export const BudgetCardView: FC<ReturnType<typeof useBudgetCardViewModel>> = ({
 
           <View className="items-end">
             <Text className="text-xs text-gray-500">Investimento</Text>
-            <Text className="text-lg font-bold text-gray-700 mt-1">
-              {formattedTotal}
-            </Text>
+            <AppPriceText
+              value={budget.total}
+              classNameCurrency="mt-1 text-sm font-bold text-gray-700"
+              classNameValue="text-lg font-bold text-gray-700"
+            />
           </View>
         </View>
       </View>

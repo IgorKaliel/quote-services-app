@@ -21,6 +21,7 @@ export const useBudgetInfiniteQuery = ({
   } = useInfiniteQuery({
     queryKey: ["budgets", filters],
     initialPageParam: 1,
+    staleTime: 1000 * 60 * 5,
     queryFn: ({ pageParam }) =>
       getBudgets({
         page: pageParam,

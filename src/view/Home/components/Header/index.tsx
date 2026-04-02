@@ -1,33 +1,36 @@
 import { Text, TouchableOpacity, View } from "react-native"
+import { colors } from "@/styles/colors"
 import { Ionicons } from "@expo/vector-icons"
-import { theme } from "@/styles/theme"
-import { router } from "expo-router"
-import { useUserStore } from "@/shared/store/user-store"
 
-export const Header = () => {
-  const { user, logout } = useUserStore()
+interface HeaderProps {
+  draftBudgetsCount: number
+}
+
+export const Header = ({ draftBudgetsCount }: HeaderProps) => {
+  const draftLabel =
+    draftBudgetsCount === 1
+      ? "Voce tem 1 item em rascunho"
+      : `Voce tem ${draftBudgetsCount} itens em rascunho`
+
   return (
-    <View>
-      {/** Transformar em um componente de toque e levar a página de perfil */}
-      <View className="flex-row items-center gap-6">
-        <View className="relative">
-          <View className="size-[56px] rounded-xl bg-shape border-2 items-center justify-center border-gray-300">
-            <Ionicons name="person" size={24} color={theme.text} />
-          </View>
-        </View>
-        {/** Ver perfil \/ */}
-        <View>
-          <Text className="font-bold text-base">Olá, {user?.name}</Text>
-          <View className="flex-row items-center gap-2">
-            <TouchableOpacity onPress={logout}>
-              <Text className="text-base color-purple-base font-bold">
-                sair
-              </Text>
-            </TouchableOpacity>
-            <Ionicons name="arrow-forward" size={20} color={theme.primary} />
-          </View>
-        </View>
+    <View className="mb-5 flex-row items-start justify-between gap-4">
+      <View className="flex-1">
+        <Text className="text-[28px] font-bold text-purple-base">
+          Orçamentos
+        </Text>
+        <Text className="text-sm text-gray-500 mt-1">{draftLabel}</Text>
       </View>
+
+      <TouchableOpacity
+        onPress={() => {}}
+        activeOpacity={0.85}
+        className="flex-row items-center rounded-full bg-purple-base px-5 py-3 gap-2"
+      >
+        <View className="size-5 items-center justify-center">
+          <Ionicons name="add" size={18} color={colors.white} />
+        </View>
+        <Text className="text-base font-bold text-white">Novo</Text>
+      </TouchableOpacity>
     </View>
   )
 }

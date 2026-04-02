@@ -37,11 +37,6 @@ export const useBudgetCardViewModel = ({ budget }: useBudgetCardProps) => {
     },
   }
 
-  const formattedTotal = new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(budget.total)
-
   const formattedUpdatedAt = new Intl.DateTimeFormat("pt-BR").format(
     new Date(budget.updatedAt),
   )
@@ -49,7 +44,6 @@ export const useBudgetCardViewModel = ({ budget }: useBudgetCardProps) => {
   return {
     budget,
     displayBudgetName,
-    formattedTotal,
     formattedUpdatedAt,
     statusStyle: statusMap[budget.status],
   }
